@@ -3,7 +3,7 @@
 def check_temperature(temp_str: str) -> int:
     print("Testing temperature: ", temp_str)
     try:
-        temp: int = int(temp_str)
+        temp = int(temp_str)
     except ValueError:
         raise ValueError(f"'{temp_str}' is not a valid number")
 

@@ -1,5 +1,6 @@
 class Plant:
-    def __init__(self, name: str, age: int, status: str, water_tank: int):
+    def __init__(self, name: str, age: int,
+                 status: str, water_tank: int) -> None:
         self.name = name
         self.status = status
         self.age = age
@@ -7,6 +8,8 @@ class Plant:
 
     def set_status(self, status: str) -> None:
         self.status = status
+        if status not in ["healthy", "wilting"]:
+            raise ValueError("Invalid status. Must be 'healthy' or 'wilting'")
         if status == "wilting":
             raise PlantError(self)
 
@@ -18,35 +21,35 @@ class Plant:
 
 
 class GardenError(Exception):
-    def __init__(self, message: str):
+    def __init__(self, message: str) -> None:
         super().__init__(message)
 
 
 class PlantError(GardenError):
-    def __init__(self, plant: Plant):
+    def __init__(self, plant: Plant) -> None:
         super().__init__(f"The {plant.name} plant is wilting")
 
 
 class WaterError(GardenError):
-    def __init__(self, water: int):
+    def __init__(self, water: int) -> None:
         super().__init__("Not enough water in the tank!\n")
 
 
-def test_plant_error(plant) -> None:
+def test_plant_error(plant: Plant) -> None:
     try:
         plant.set_status("wilting")
     except PlantError as e:
         print(f"Caught PlantError: {e}\n")
 
 
-def test_water_error(plant) -> None:
+def test_water_error(plant: Plant) -> None:
     try:
         plant.water(5)
     except WaterError as e:
         print(f"Caught WaterError: {e}")
 
 
-def test_all_errors(plant) -> None:
+def test_all_errors(plant: Plant) -> None:
     try:
         plant.set_status("wilting")
     except GardenError as e:

@@ -38,6 +38,9 @@ class GardenManager:
         for plant in self.plants:
             water_level = plant.water_level
             sunlight_hours = plant.sunlight_hours
+            if water_level is not int or sunlight_hours is not int:
+                raise ValueError(
+                    "Water level and sunlight hours must be integers!")
             if water_level < 1:
                 raise GardenError(
                     f"Water level {water_level} is too low (min 1)")

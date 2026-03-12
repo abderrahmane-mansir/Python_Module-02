@@ -27,7 +27,7 @@ class GardenError(Exception):
 
 class PlantError(GardenError):
     def __init__(self, plant: Plant) -> None:
-        super().__init__(f"The {plant.name} plant is wilting")
+        super().__init__(f"The {plant.name} plant is wilting!")
 
 
 class WaterError(GardenError):

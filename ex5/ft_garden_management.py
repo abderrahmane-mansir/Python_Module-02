@@ -5,6 +5,10 @@ class Plant:
         self.water_level = water_level
         self.sunlight_hours = sunlight_hours
 
+    def water_check(self):
+        if self.water_level < 2:
+            raise GardenError("Not enough water in tank")
+
 
 class GardenError(Exception):
     def __init__(self, message: str) -> None:
@@ -38,22 +42,23 @@ class GardenManager:
         for plant in self.plants:
             water_level = plant.water_level
             sunlight_hours = plant.sunlight_hours
-            if water_level is not int or sunlight_hours is not int:
-                raise ValueError(
-                    "Water level and sunlight hours must be integers!")
+            if water_level.__class__.__name__ != 'int':
+                raise ValueError("Water level must be an integer!")
+            if sunlight_hours.__class__.__name__ != 'int':
+                raise ValueError("sunlight hours must be an integers!")
             if water_level < 1:
                 raise GardenError(
-                    f"Water level {water_level} is too low (min 1)")
+                    f"Water level {water_level} is too low (min 1)\n")
             elif water_level > 10:
                 raise GardenError(
-                    f"Water level {water_level} is too high (max 10)")
+                    f"Water level {water_level} is too high (max 10)\n")
             if sunlight_hours < 1:
                 raise GardenError(
-                    f"Sunlight hours {sunlight_hours} is too low (min 1)")
+                    f"Sunlight hours {sunlight_hours} is too low (min 1)\n")
             elif sunlight_hours > 12:
                 raise GardenError(
-                    f"Sunlight hours {sunlight_hours} is too high (max 12)")
-            print(f"{plant.name} is healthy"
+                    f"Sunlight hours {sunlight_hours} is too high (max 12)\n")
+            print(f"{plant.name} is healthy "
                   f"(water: {plant.water_level}, sun: {plant.sunlight_hours})")
 
 
@@ -83,10 +88,16 @@ def test_garden_manager() -> None:
         manager.check_health()
     except GardenError as e:
         print(f"Caught GardenError: {e}")
-    finally:
-        print("System recovered and continuing...\n")
 
-    print("Garden management system test complete!")
+    print("Testing error recovery...")
+    plant = Plant("tulip", 1, 3)
+    try:
+        plant.water_check()
+    except GardenError as e:
+        print(f"Caught GardenError: {e}")
+    finally:
+        print("System recovered and continuing...")
+    print("\nGarden management system test complete!")
 
 
 if __name__ == "__main__":

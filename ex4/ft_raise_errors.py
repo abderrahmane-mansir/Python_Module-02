@@ -4,7 +4,7 @@ def check_plant_health(plant_name: str, water_level: int,
         raise ValueError("Plant name cannot be empty!")
     if water_level.__class__.__name__ != 'int':
         raise ValueError("Water level must be an integer!")
-    if water_level.__class__.__name__ != 'int':
+    if sunlight_hours.__class__.__name__ != 'int':
         raise ValueError("sunlight hours must be an integers!")
     if water_level < 1:
         raise ValueError(f"Water level {water_level} is too low (min 1)")
